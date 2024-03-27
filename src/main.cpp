@@ -1,8 +1,10 @@
+#include "custom_headers/shader_compiler.h"
 #include <cstdint>
 #include <cstdlib>
 #include <glad/glad.h>
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <memory>
 #include <stdexcept>
 
 const uint32_t WIDTH = 800;
@@ -13,13 +15,18 @@ struct Application{
   public:
   void run(){
     GLinit();
+    ShaderInit();
     mainLoop();
     cleanup();
   }
   private:
   GLFWwindow* window;
+  std::unique_ptr<Shader> shader_ptr;
 
-
+  void ShaderInit(){
+    std::cout << "Shader Init \n";
+    shader_ptr = std::unique_ptr<Shader>(new Shader{"../resources/fragmentShader.glsl", "../resources/vertexshader.glsl"});
+  }
 
   void GLinit(){
     glfwInit();
@@ -45,12 +52,11 @@ struct Application{
 
   void mainLoop(){
     while(!glfwWindowShouldClose(window)){
-      
     }
   }
   
   void cleanup(){
-  
+    glfwTerminate();
   }
 };
 
@@ -63,7 +69,7 @@ int main(){
   Application app{};
 
   try{
-
+    app.run();
 
   } catch (const std::exception& e){
     std::cerr << e.what() << std::endl;

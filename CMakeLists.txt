@@ -6,12 +6,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(glfw3 REQUIRED)
 
-include_directories(includes)
 
 
 file(GLOB SOURCES "src/*.cpp")
 add_executable(Visualization ${SOURCES} src/glad.c)
 
+target_include_directories(Visualization PUBLIC includes/)
 target_link_libraries(Visualization glfw dl)
 
 
