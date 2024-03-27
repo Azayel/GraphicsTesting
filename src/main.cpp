@@ -33,7 +33,6 @@ struct Application{
     if(window == nullptr) {
       throw std::runtime_error{"Failled to Create GLFW Window!"};
     }
-
     glfwMakeContextCurrent(window);
 
     //Enter Callbacks here
