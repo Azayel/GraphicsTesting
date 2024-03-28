@@ -1,7 +1,9 @@
+#include <cstddef>
 #include <custom_headers/shader_compiler.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <glad/glad.h>
 
 Shader::Shader(const std::string vertexPath, const std::string FragmentPath){
   std::cout << "Constructor\n"; 
@@ -26,7 +28,23 @@ Shader::Shader(const std::string vertexPath, const std::string FragmentPath){
     std::cerr << e.what() << std::endl;
   }
 
-  std::cout << vertexShaderString << std::endl;
-  std::cout << fragmentShaderString << std::endl;
+  const char* vertexShaderCode = vertexShaderString.c_str();
+  const char* fragmentShaderCode = fragmentShaderString.c_str();
+
+  GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+  GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+  glShaderSource(vertexShaderID,1, &vertexShaderCode,NULL);
+  glShaderSource(fragmentShaderID,1,&fragmentShaderCode,NULL);
+  glCompileShader(vertexShaderID);
+  glCompileShader(fragmentShaderID);
+}
+
+
+Shader::checkError(GLuint shaderType){
+  GLuint success = 0;
+  glGetShaderiv(shaderType, GL_COMPILE_STATUS, &success);
+  if(success == GL_FALSE){
+    std::cout << "Failed Compilation\n";
+  }
 }
 

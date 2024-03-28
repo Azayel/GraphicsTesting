@@ -24,7 +24,6 @@ struct Application{
   std::unique_ptr<Shader> shader_ptr;
 
   void ShaderInit(){
-    std::cout << "Shader Init \n";
     shader_ptr = std::unique_ptr<Shader>(new Shader{"../resources/fragmentShader.glsl", "../resources/vertexshader.glsl"});
   }
 
