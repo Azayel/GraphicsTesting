@@ -1,8 +1,19 @@
 #pragma once
 #include <string>
+#include <glad/glad.h>
 
-struct Shader{
+enum ShaderType{
+  Shader,
+  Program,
+};
+
+
+struct ShaderStruct{
   
-  Shader(const std::string , const std::string );
-  void checkError(GLuint);
+  ShaderStruct(const std::string, const std::string);
+  ~ShaderStruct();
+  void checkCompilationErrors(GLuint, ShaderType);
+
+private:
+  GLuint ShaderID;
 };
