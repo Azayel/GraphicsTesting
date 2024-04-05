@@ -1,4 +1,5 @@
-#include "custom_headers/shader_compiler.h"
+#include <custom_headers/shader_compiler.h>
+
 #include <cstdint>
 #include <cstdlib>
 #include <glad/glad.h>
@@ -6,6 +7,7 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <stdexcept>
+
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -21,10 +23,9 @@ struct Application{
   }
   private:
   GLFWwindow* window;
-  std::unique_ptr<Shader> shader_ptr;
-
+  std::unique_ptr<ShaderStruct> shader_ptr;
   void ShaderInit(){
-    shader_ptr = std::unique_ptr<Shader>(new Shader{"../resources/fragmentShader.glsl", "../resources/vertexshader.glsl"});
+    shader_ptr = std::unique_ptr<ShaderStruct>(new ShaderStruct{"../resources/fragmentShader.glsl", "../resources/vertexshader.glsl"});
   }
 
   void GLinit(){
