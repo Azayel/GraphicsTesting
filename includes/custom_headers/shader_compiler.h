@@ -1,6 +1,7 @@
 #pragma once
+#include<custom_headers/glCommon.h>
+#include <iostream>
 #include <string>
-#include <GL/gl.h>
 
 enum ShaderType{
   Shader,
@@ -9,11 +10,14 @@ enum ShaderType{
 
 
 struct ShaderStruct{
-  
+private:
+    GLuint ShaderID;
+public:
   ShaderStruct(const std::string, const std::string);
-  ~ShaderStruct();
+  ~ShaderStruct(){
+      std::cout << "Deleting Shader" << std::endl;
+      glDeleteProgram(ShaderID);
+  }
   void checkCompilationErrors(GLuint, ShaderType);
 
-private:
-  GLuint ShaderID;
 };

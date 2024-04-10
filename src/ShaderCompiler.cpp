@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <glad/glad.h>
 
 ShaderStruct::ShaderStruct(const std::string vertexPath, const std::string FragmentPath){
   std::cout << "Constructor\n"; 
@@ -49,16 +48,13 @@ ShaderStruct::ShaderStruct(const std::string vertexPath, const std::string Fragm
   ShaderID = glCreateProgram();
   glAttachShader(ShaderID,vertexShaderID);
   glAttachShader(ShaderID,fragmentShaderID);
+  glLinkProgram(ShaderID);
   checkCompilationErrors(ShaderID, ShaderType::Program);
 
   glDeleteShader(vertexShaderID);
   glDeleteShader(fragmentShaderID);
 }
 
-ShaderStruct::~ShaderStruct(){
-  std::cout << "Deleting Shader" << std::endl;
-  glDeleteProgram(ShaderID);
-}
 
 
 void ShaderStruct::checkCompilationErrors(GLuint shaderType, ShaderType type){
