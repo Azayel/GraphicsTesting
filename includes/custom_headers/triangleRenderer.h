@@ -7,6 +7,7 @@
 class Triangle{
   GLuint VBO,VAO;
   std::vector<glm::vec3> vectices;
+
   
 
 

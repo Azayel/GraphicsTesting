@@ -12,6 +12,8 @@ const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
 
+
+//callbacks
 struct Application{
   public:
   void run(){
@@ -42,20 +44,34 @@ struct Application{
     glfwMakeContextCurrent(window);
 
     //Enter Callbacks here
-    //
-
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
       throw std::runtime_error{"Failed to initialize GLAD"};
     }
   }
 
-  void mainLoop(){
-    while(!glfwWindowShouldClose(window)){
+  void accquireUserInput(GLFWwindow* window){
+    
+    if(glfwGetKey(window,GLFW_KEY_ESCAPE) == GLFW_PRESS){
+      glfwSetWindowShouldClose(window,GLFW_TRUE);
+      std::cout << "Key Pressed\n";
     }
   }
+
+  void updateWindowGraphics(){}
+
+  void mainLoop(){
+    while(!glfwWindowShouldClose(window)){
+      accquireUserInput(window);
+      updateWindowGraphics(); 
+      glfwPollEvents();
+    }
+  }
+
+  
   
   void cleanup(){
     std::cout << "Cleanup\n";
+    shader_ptr.reset();
     glfwTerminate();
   }
 };
@@ -66,12 +82,14 @@ struct Application{
 
 
 int main(){
+  
   Application app{};
 
+  
   try{
     app.run();
-
-  } catch (const std::exception& e){
+  }
+  catch (const std::exception& e){
     std::cerr << e.what() << std::endl;
     return EXIT_FAILURE;
   }
